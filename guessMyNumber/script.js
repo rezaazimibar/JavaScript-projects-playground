@@ -1,0 +1,68 @@
+'use strict';
+
+// console.log(document.querySelector('.message').textContent)
+
+// document.querySelector('.message').textContent="🎉you were right"
+
+// document.querySelector('.score').textContent=55
+// document.querySelector('.number').textContent=42
+// console.log(document.querySelector('.guess').value)
+// document.querySelector('.guess').value=34
+// console.log(document.querySelector('.guess').value)
+
+//________________________________________event_handling___________________________________________
+let random_num = Math.trunc(Math.random() * 20) + 1;
+let score = 20;
+document.querySelector('.check').addEventListener('click', function () {
+  let number = document.querySelector('.number');
+  let input = Number(document.querySelector('.guess').value);
+  let message = document.querySelector('.message');
+  console.log(random_num)
+  // let score = Number(document.querySelector('.score').textContent);
+  //when there is no number
+  if (!input) {
+    message.textContent = `🚫please enter a number`;
+  }
+  //when player win
+  else if (input === random_num) {
+    message.textContent = `🎉your number is correct`;
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
+    document.querySelector('.number').textContent = random_num;
+  }
+  //when the number is high
+  else if (input > random_num) {
+    score--;
+    if (score >= 1) {
+      document.querySelector('.score').textContent = score;
+      message.textContent = '📈too high';
+    } else {
+      message.textContent = '🔥you lost';
+      document.querySelector('.score').textContent = 0;
+      document.querySelector('.number').textContent = '☠';
+    }
+  }
+  //when the number is low
+  else if (input < random_num) {
+    score--;
+    if (score >= 1) {
+      document.querySelector('.score').textContent = score;
+      message.textContent = '📉too low';
+    } else {
+      message.textContent = '🔥you lost';
+      document.querySelector('.score').textContent = 0;
+      document.querySelector('.number').textContent = '☠';
+    }
+  }
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  random_num = Math.trunc(Math.random() * 20) + 1;
+  document.querySelector('.score').textContent=score
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.guess').value = '';
+  document.querySelector('.message').textContent = 'start guessing...';
+});
