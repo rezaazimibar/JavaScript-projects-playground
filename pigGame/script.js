@@ -9,6 +9,7 @@ const player1 = document.querySelector('.player--0');
 const player2 = document.querySelector('.player--1');
 const diceEl = document.querySelector('.dice');
 const rolBtn = document.querySelector('.btn--roll');
+const holdBtn = document.querySelector('.btn--hold');
 //default condition
 score1El.textContent = 0;
 score0El.textContent = 0;
@@ -17,35 +18,60 @@ diceEl.classList.add('hidden');
 const scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+let playing = true;
+
+//functions
+
+function switching() {
+  currentScore = 0;
+  document.getElementById(`current--${activePlayer}`).textContent =
+    currentScore;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player1.classList.toggle('player--active');
+  player2.classList.toggle('player--active');
+}
+
 //event handler
 rolBtn.addEventListener('click', function () {
-  //generate random number
-  const ranNum = Math.trunc(Math.random() * 6) + 1;
-  //display dice
-  diceEl.classList.remove('hidden');
-  diceEl.src = `assets/dice-${ranNum}.png`;
-  console.log(ranNum);
-  //check roll
-  if (ranNum !== 1) {
-    currentScore += ranNum;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      currentScore;
-  } else {
-    //switch
-    currentScore = 0;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      currentScore;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    // if (activePlayer === 0) {
-    //   activePlayer = 1;
-    //   player1.classList.remove('player--active');
-    //   player2.classList.add('player--active');
-    // } else {
-    //   activePlayer = 0;
-    //   player1.classList.add('player--active');
-    //   player2.classList.remove('player--active');
-    // }
-    player1.classList.toggle('player--active');
-    player2.classList.toggle('player--active');
+  if (playing) {
+    //generate random number
+    const ranNum = Math.trunc(Math.random() * 6) + 1;
+    //display dice
+    diceEl.classList.remove('hidden');
+    diceEl.src = `assets/dice-${ranNum}.png`;
+    console.log(ranNum);
+    //check roll
+    if (ranNum !== 1) {
+      currentScore += ranNum;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      //switch
+      // currentScore = 0;
+      // document.getElementById(`current--${activePlayer}`).textContent =
+      //   currentScore;
+      // activePlayer = activePlayer === 0 ? 1 : 0;
+      // player1.classList.toggle('player--active');
+      // player2.classList.toggle('player--active');
+      switching();
+    }
+  }
+});
+
+holdBtn.addEventListener('click', function () {
+  if (playing) {
+    scores[activePlayer] = scores[activePlayer] + currentScore;
+    const currentMainScore = document.querySelector(`#score--${activePlayer}`);
+    currentMainScore.textContent = scores[activePlayer];
+
+    if (scores[activePlayer] > 10) {
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      playing = false;
+      diceEl.classList.add('hidden')
+    } else {
+      switching();
+    }
   }
 });
