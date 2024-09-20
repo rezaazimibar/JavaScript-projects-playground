@@ -16,7 +16,7 @@ score1El.textContent = 0;
 score0El.textContent = 0;
 diceEl.classList.add('hidden');
 
-const scores = [0, 0];
+let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
 let playing = true;
@@ -79,17 +79,23 @@ holdBtn.addEventListener('click', function () {
 
 newBtn.addEventListener('click', function () {
   currentScore=0
-  activePlayer=0
   document
   .querySelector(`.player--${activePlayer}`)
   .classList.remove('player--winner');
  
+  
   playing = true;
-
-
-  score1El.textContent = 0;
-  score0El.textContent = 0;
+  
+  scores=[0,0]
+  score1El.textContent = scores[1];
+  score0El.textContent = scores[0];
   diceEl.classList.add('hidden');
+  current0.textContent=currentScore
+  current1.textContent=currentScore
+  if(activePlayer===1){
+  player1.classList.toggle('player--active');
+  player2.classList.toggle('player--active');}
+  activePlayer=0
 
   console.log('hey');
 });
