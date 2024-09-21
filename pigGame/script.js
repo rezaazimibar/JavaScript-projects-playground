@@ -47,13 +47,6 @@ rolBtn.addEventListener('click', function () {
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
     } else {
-      //switch
-      // currentScore = 0;
-      // document.getElementById(`current--${activePlayer}`).textContent =
-      //   currentScore;
-      // activePlayer = activePlayer === 0 ? 1 : 0;
-      // player1.classList.toggle('player--active');
-      // player2.classList.toggle('player--active');
       switching();
     }
   }
@@ -78,24 +71,27 @@ holdBtn.addEventListener('click', function () {
 });
 
 newBtn.addEventListener('click', function () {
-  currentScore=0
+  currentScore = 0;
+
   document
-  .querySelector(`.player--${activePlayer}`)
-  .classList.remove('player--winner');
- 
-  
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove('player--winner');
+
   playing = true;
-  
-  scores=[0,0]
+
+  scores = [0, 0];
+
   score1El.textContent = scores[1];
   score0El.textContent = scores[0];
-  diceEl.classList.add('hidden');
-  current0.textContent=currentScore
-  current1.textContent=currentScore
-  if(activePlayer===1){
-  player1.classList.toggle('player--active');
-  player2.classList.toggle('player--active');}
-  activePlayer=0
 
-  console.log('hey');
+  diceEl.classList.add('hidden');
+
+  current0.textContent = currentScore;
+  current1.textContent = currentScore;
+
+  if (activePlayer === 1) {
+    switching();
+  }
+
+  activePlayer = 0;
 });
