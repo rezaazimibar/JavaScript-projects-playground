@@ -13,8 +13,10 @@
       rel="stylesheet"
     />
     <style>
-      html,input,button{
-        font-family: 'Fredoka';
+      html,
+      input,
+      button {
+        font-family: "Fredoka";
         font-size: 1em;
       }
       .container {
@@ -25,6 +27,7 @@
       }
       .start-box {
         margin: 20px 0;
+        display: none;
       }
       .start-box #input-counter {
         padding: 7px;
@@ -42,6 +45,9 @@
         color: white;
         border-radius: 2px;
       }
+      .start-box.active{
+        display: block;
+      }
 
       .message {
         margin-top: 10px;
@@ -49,17 +55,31 @@
       }
 
       .message .loading {
+        display: none;
         color: #e74c3c;
       }
 
       .message .success {
+        display: none;
         color: #27ae60;
       }
+      #error-message {
+        display: none;
+        color: rgb(255, 0, 0);
+        margin-bottom: 1rem;
+      }
+      #error-message.active {
+        display: block;
+      }
+      .c100 {
+        display: none;
+      }
+
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="start-box">
+      <div class="start-box active">
         <input
           type="text"
           id="input-counter"
@@ -67,6 +87,7 @@
         />
         <button id="start-counter">start</button>
       </div>
+      <div id="error-message"></div>
       <div class="c100 p50">
         <span>250</span>
         <div class="slice">
