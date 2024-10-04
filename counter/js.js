@@ -11,7 +11,7 @@ let loadMes = document.querySelector(".loading");
 startButton.addEventListener("click", function (e) {
   let seconde = Number(inputCounter.value);
 
-  //not a number
+  //if input is not a number
 
   if (isNaN(seconde) || seconde === 0) {
     inputCounter.style.borderColor = "red";
@@ -21,7 +21,7 @@ startButton.addEventListener("click", function (e) {
     return;
   }
 
-  //timer starting
+  //timer started
 
   inputCounter.style.borderColor = "black";
   inputCounter.value = "";
@@ -34,18 +34,32 @@ startButton.addEventListener("click", function (e) {
 
   //timer finished
 
+  let originalSecond = seconde;
+  let lastPercent = "p100";
+
+  //timer running
+
   let timerId = setInterval(() => {
-    if (seconde <= 1) {
+    if (lastPercent) circleNum.classList.remove(lastPercent);
+    if (seconde <= 0) {
+      circleNum.classList.add('p100')
       clearInterval(timerId);
       startBox.classList.add("active");
       sucMes.style.display = "block";
       loadMes.style.display = "none";
       circleNum.style.display = "none";
+      return;
     }
-
+    
     //timer counting
 
     seconde -= 1;
+    let percent = Math.abs(
+      Math.floor(( (originalSecond - seconde) * 100) / originalSecond)-100
+    );
+    lastPercent = `p${percent}`;
+    circleNum.classList.add(`p${percent}`);
+
     timerNum.textContent = seconde;
-  }, 100);
+  }, 1000);
 });
