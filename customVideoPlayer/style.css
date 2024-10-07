@@ -83,7 +83,7 @@ body {
   color: white;
   align-items: center;
   justify-content: space-between;
-  display: none;
+  display: flex;
 }
 
 .myplayer .controls__btns .right,
