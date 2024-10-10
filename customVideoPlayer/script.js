@@ -7,6 +7,7 @@ let rewindButton = controls.querySelector(".rewind");
 let forwardButton = controls.querySelector(".forward");
 let volumeButton = controls.querySelector(".volume");
 let fullscreenButton = controls.querySelector(".fullscreen");
+let timerBar = controls.querySelector(".controls__progressbar-current");
 
 let timeArea = document.querySelector(".timer");
 let videoCurrentTime = timeArea.querySelector(".currentTime");
@@ -24,8 +25,12 @@ playButton.addEventListener("click", function () {
   }
 });
 
+//when time updating
 media.addEventListener("timeupdate", function () {
-  videoCurrentTime.textContent = getTime(media.currentTime);
+  videoCurrentTime.textContent = getTime(media.currentTime); //show the current time
+  let barLength = Math.floor((media.currentTime / media.duration) * 100);
+  timerBar.style = `background: linear-gradient(90deg, rgba(230, 126, 34, 1) ${barLength}%, #e1e1e1 0%)`;
+  timerBar.value = barLength;
 });
 
 //-5 second rewind
@@ -38,6 +43,12 @@ forwardButton.addEventListener("click", function () {
   media.currentTime = media.currentTime + 5;
 });
 
+//progress bar
+timerBar.addEventListener("input", function () {
+  console.log(this.value);
+  media.currentTime = (this.value / 100) * media.duration;
+});
+
 //___functions___
 
 //toggle pause and play button
@@ -45,6 +56,10 @@ function togglePlayButton() {
   let icon = playButton.querySelector("i");
   icon.classList.toggle("ion-md-pause");
   icon.classList.toggle("ion-md-play");
+  media.onended = function () {
+    icon.classList.remove("ion-md-pause");
+    icon.classList.add("ion-md-play");
+  };
 }
 
 //get the current time and show
