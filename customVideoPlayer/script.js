@@ -45,7 +45,6 @@ forwardButton.addEventListener("click", function () {
 
 //progress bar
 timerBar.addEventListener("input", function () {
-  console.log(this.value);
   media.currentTime = (this.value / 100) * media.duration;
 });
 
