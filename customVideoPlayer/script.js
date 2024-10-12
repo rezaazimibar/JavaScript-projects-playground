@@ -9,9 +9,16 @@ let volumeButton = controls.querySelector(".volume");
 let fullscreenButton = controls.querySelector(".fullscreen");
 let timerBar = controls.querySelector(".controls__progressbar-current");
 
+let volumeIcon = controls.querySelector(".volume .icon");
+let volumeProgressBar = controls.querySelector(".volume .volume__progress");
+let inputProgressBar = volumeProgressBar.querySelector("input");
+
 let timeArea = document.querySelector(".timer");
 let videoCurrentTime = timeArea.querySelector(".currentTime");
 let videoTime = timeArea.querySelector(".videoTime");
+//default values
+
+media.volume = 0.5;
 
 //play video
 playButton.addEventListener("click", function () {
@@ -31,6 +38,15 @@ media.addEventListener("timeupdate", function () {
   let barLength = Math.floor((media.currentTime / media.duration) * 100);
   timerBar.style = `background: linear-gradient(90deg, rgba(230, 126, 34, 1) ${barLength}%, #e1e1e1 0%)`;
   timerBar.value = barLength;
+});
+
+volumeIcon.addEventListener("click", function () {
+  volumeProgressBar.classList.toggle("active");
+});
+
+inputProgressBar.addEventListener("input", function () {
+  media.volume = this.value / 100;
+  this.style = `  background: linear-gradient(90deg, rgba(230, 126, 34, 1) ${this.value}%, #e1e1e1 0%);`;
 });
 
 //-5 second rewind
