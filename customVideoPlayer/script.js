@@ -1,3 +1,4 @@
+//selectors
 let playerArea = document.querySelector(".myplayer");
 let media = playerArea.querySelector("video");
 let controls = playerArea.querySelector(".myplayer__controls");
@@ -13,11 +14,13 @@ let volumeIcon = controls.querySelector(".volume .icon");
 let volumeProgressBar = controls.querySelector(".volume .volume__progress");
 let inputProgressBar = volumeProgressBar.querySelector("input");
 
+let fullscreen = document.querySelector(".fullscreen");
+
 let timeArea = document.querySelector(".timer");
 let videoCurrentTime = timeArea.querySelector(".currentTime");
 let videoTime = timeArea.querySelector(".videoTime");
-//default values
 
+//default values
 media.volume = 0.5;
 
 //play video
@@ -40,6 +43,30 @@ media.addEventListener("timeupdate", function () {
   timerBar.value = barLength;
 });
 
+//apply full screen for video 
+fullscreen.addEventListener("click", function () {
+  if (!document.fullscreenElement) {
+    if (playerArea.requestFullscreen) {
+      playerArea.requestFullscreen();
+    } else if (playerArea.mozFullscreenElement) {
+      playerArea.mozFullscreenElement();
+    } else if (playerArea.webkitFullscreenElement) {
+      playerArea.webkitFullscreenElement();
+    } else if (playerArea.msFullscreenElement) {
+      playerArea.msFullscreenElement();
+    }
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullscreen) {
+    document.mozCancelFullscreen();
+  } else if (document.msCancelFullscreen) {
+    document.msCancelFullscreen();
+  } else if (document.webkitCancelFullscreen) {
+    document.webkitCancelFullscreen();
+  }
+});
+
+//when we click on volume icon it show volume progress bar
 volumeIcon.addEventListener("click", function () {
   volumeProgressBar.classList.toggle("active");
 });
