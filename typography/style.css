@@ -1,0 +1,21 @@
+html {
+  font-family: "Fredericka the Great", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+}
+
+.hero {
+  color: blue;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero div {
+  font-size: 5rem;
+}
