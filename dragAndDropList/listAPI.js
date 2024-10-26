@@ -35,3 +35,25 @@ const data = [
     Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
   },
 ];
+
+new draggable({
+  el: document.querySelector("#list"),
+  list: data,
+  template: (item) => {
+    return `
+    <div class="list_item" id="${item.id}">
+    <div class="list_item_head">
+        <span class="head_id">${item.id}</span>
+    </div>
+    <div class="list_item_content">
+        <span class="item_title">${item.title}</span>
+        <p class="text">${item.Text}</p>
+    </div>
+</div>
+    
+    `;
+  },
+  update : (list )=>{
+    console.log(list)
+  }
+});
