@@ -79,7 +79,25 @@ const displayMovements = function (movement) {
 };
 
 displayMovements(account1.movements);
-console.log(containerMovements.textContent);
+
+const calcBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov);
+  labelBalance.textContent = `${balance}€`;
+};
+calcBalance(account1.movements);
+
+//produce side effect on accounts array
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.userName = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(char => char[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -131,24 +149,63 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
 // TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 
-const JFD = [3, 5, 2, 12, 7];
-const KRD = [4, 1, 15, 8, 3];
+// const JFD = [3, 5, 2, 12, 7];
+// const KRD = [4, 1, 15, 8, 3];
 
-const checkDogs = function (Julia, arr2) {
-  const arr1 = Julia.slice();
-  arr1.splice(0, 1);
-  arr1.splice(-2);
+// const checkDogs = function (Julia, arr2) {
+//   const arr1 = Julia.slice();
+//   arr1.splice(0, 1);
+//   arr1.splice(-2);
 
-  const both_arr = [...arr1, ...arr2];
+//   const both_arr = [...arr1, ...arr2];
 
-  both_arr.forEach(function (dog, i) {
-    const type =
-      dog < 3
-        ? 'is a still puppy🐶'
-        : `is an adult, and it is ${dog} years old`;
+//   both_arr.forEach(function (dog, i) {
+//     const type =
+//       dog < 3
+//         ? 'is a still puppy🐶'
+//         : `is an adult, and it is ${dog} years old`;
 
-    console.log(`dog number ${i + 1} ${type}`);
-  });
-};
+//     console.log(`dog number ${i + 1} ${type}`);
+//   });
+// };
 
-checkDogs(JFD, KRD);
+// checkDogs(JFD, KRD);
+
+//---------------------------------------------map-method------------------------------------------
+
+// const EURtoUSD = 1.1;
+
+// const movementUSD = movements.map(mov => mov * EURtoUSD);
+
+// console.log(movementUSD);
+// console.log(movements);
+
+//-----------------------------------------filter-()-----------------------------------------------
+
+// const deposits = movements.filter(function (char, i, arr) {
+//   return char > 0;
+// });
+// console.log(deposits);
+
+// const withdrawals = movements.filter(char => {
+//   return char < 0;
+// });
+// console.log(withdrawals);
+
+// ---------------------------------------reduce-()------------------------------------------------
+// const sum = movements.reduce((accumulator, currentValue) => {
+
+//   return accumulator + currentValue;
+// },0);
+
+// console.log(sum);
+
+// const maximum_val = movements.reduce((acc, mov) => {
+//   if (acc > mov) {
+//    return acc
+//   }else {
+//     return mov
+//   }
+// }, movements[0]);
+
+// console.log(maximum_val);
