@@ -71,7 +71,7 @@ const displayMovements = function (movement) {
       i + 1
     } ${type} deposit</div>
     <div class="movements__date">3 days ago</div>
-    <div class="movements__value">${mov}</div>
+    <div class="movements__value">${mov} €</div>
   </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -85,6 +85,26 @@ const calcBalance = function (movements) {
   labelBalance.textContent = `${balance}€`;
 };
 calcBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(interest => interest >= 1)
+    .reduce((acc, res) => acc + res, 0);
+  labelSumInterest.textContent = `${Math.abs(interest)}€`;
+};
+calcDisplaySummary(account1.movements);
 
 //produce side effect on accounts array
 const createUsernames = function (accs) {
@@ -209,3 +229,38 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // }, movements[0]);
 
 // console.log(maximum_val);
+
+// ------------------------------------coding-challenge-()-----------------------------------------
+
+// const calcAverageHumanAge = function (dogArr) {
+//   let humanAge = dogArr.map(char => {
+//     if (char <= 2) {
+//       return 2 * char;
+//     } else if (char > 2) {
+//       return 16 + char * 4;
+//     }
+//   });
+
+//   const filtered_dog = humanAge.filter(char => {
+//     return char > 18;
+//   });
+
+//   const sum_human = filtered_dog.reduce((acc, char) => {
+//     return acc + char;
+//   }, 0);
+//   const average_human = sum_human / filtered_dog.length;
+//   console.log(`human age = ${humanAge}`);
+//   console.log(`filtered dog = ${filtered_dog}`);
+//   console.log(`average = ${average_human}`);
+// };
+
+// calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+
+// -----------------------------------------PIPELINE------------------------------------------------
+
+// const totalDepositToUSD = movements
+//   .filter(mov => mov > 0)
+//   .map(mov => mov * 1.1)
+//   .reduce((acc, mov) => acc + mov, 0);
+
+// console.log(totalDepositToUSD)
