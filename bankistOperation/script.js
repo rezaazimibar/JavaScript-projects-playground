@@ -118,6 +118,18 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts);
 
+//---event-handler---
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(acc => acc.userName === inputLoginUsername.value)
+  console.log(currentAccount)
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)){
+    console.log("login was successful")
+  }
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -264,3 +276,33 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   .reduce((acc, mov) => acc + mov, 0);
 
 // console.log(totalDepositToUSD)
+
+// --------------------------------------coding-challenge-3-()-------------------------------------
+
+// const calcAverageHumanAge = dogArray => {
+//   const result = dogArray
+//     .map(char => {
+//       if (char <= 2) {
+//         return char * 2;
+//       } else {
+//         return 16 + char * 4;
+//       }
+//     })
+//     .filter(char => char >= 18)
+//     .reduce((acc, char, i, arr) => acc + char /arr.length, 0);
+//     console.log(result)
+// };
+
+// calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+
+// ----------------------------------------------find-()-------------------------------------------
+
+// console.log(movements.find(mov => mov < 0));
+
+console.log(accounts.find(mov => mov.owner === 'Jessica Davis'));
+
+// for (const acc of accounts) {
+//   if (acc.owner === 'Jessica Davis') {
+//     console.log(acc);
+//   }
+// }
