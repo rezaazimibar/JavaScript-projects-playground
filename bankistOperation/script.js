@@ -386,3 +386,67 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // ----------------------------------------------some()--------------------------------------------
 
 // console.log(movements.some(char => 0 < char));
+
+// ------------------------------------------------array-------------------------------------------
+
+// const x = new Array(8);
+
+// console.log(x);
+
+// x.fill(2, 4, 7);
+// console.log(x);
+
+// const y = Array.from({ length: 8 }, () => 1);
+// console.log(y);
+
+// const z = Array.from({ length: 8 }, (_, i) => i + 1);
+// console.log(z);
+
+// console.log(document.querySelectorAll('.movements__value'))
+// const movementUI = Array.from(document.querySelectorAll('.movements__value'))
+// console.log(movementUI)
+
+// ----------------------------------------Practice------------------------------------------------
+
+const bankDepositSum = accounts
+  .flatMap(char => char.movements)
+  .filter(char => char > 0)
+  .reduce((acc, char) => acc + char, 0);
+
+console.log(bankDepositSum);
+
+const number_deposit_over_1000 = accounts
+  .flatMap(char => char.movements)
+  .reduce((acc, cur) => {
+    if (cur >= 1000) {
+      return ++acc;
+    } else {
+      return acc;
+    }
+  }, 0);
+console.log(number_deposit_over_1000);
+
+const balanceObjects = accounts
+  .flatMap(char => char.movements)
+  .reduce(
+    (acc, cur) => {
+      if (cur > 0) {
+        acc.deposit += cur;
+      } else {
+        acc.withdrawals += cur;
+      }
+      return acc;
+    },
+    { deposit: 0, withdrawals: 0 }
+  );
+console.log(balanceObjects);
+
+// const title_converter = function (title) {
+//   const title_case = title.reduce((acc, cur) => {
+//     acc + cur;
+//     return cur;
+//   }, '');
+//   return title_case;
+// };
+
+// console.log(title_converter('heythere'));
