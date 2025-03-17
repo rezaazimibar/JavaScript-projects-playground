@@ -90,7 +90,7 @@ const displayMovements = function (movement, sort = false) {
       i + 1
     } ${type} deposit</div>
     <div class="movements__date">3 days ago</div>
-    <div class="movements__value">${mov} €</div>
+    <div class="movements__value">${mov.toFixed(2)} €</div>
   </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -99,26 +99,26 @@ const displayMovements = function (movement, sort = false) {
 
 const calcBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  labelSumOut.textContent = `${Math.abs(outcomes).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .filter(interest => interest >= 1)
     .reduce((acc, res) => acc + res, 0);
-  labelSumInterest.textContent = `${Math.abs(interest)}€`;
+  labelSumInterest.textContent = `${Math.abs(interest).toFixed(2)}€`;
 };
 
 //produce side effect on accounts array
@@ -206,7 +206,7 @@ btnClose.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     currentAccount.movements.push(amount);
@@ -226,13 +226,13 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -535,3 +535,25 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   return a.recommendedFood - b.recommendedFood;
 // });
 // console.log(shallow_copy);
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// LECTURES 2
+
+console.log(34);
+console.log(0.1 + 0.2);
+
+console.log(Number.parseInt('float32', 16));
+console.log(Number.parseInt('float32', 10));
+console.log(Number.isNaN(34));
+console.log(Number.isNaN(+'df34'));
+console.log(25 / 0);
+
+console.log(Number.isInteger(34.2));
+console.log(Number.isFinite(34.2));
+
+console.log(Math.trunc(Math.random() * 4) + 1);
+
+console.log(Math.round(3.8));
+
+console.log(+(3.234).toFixed(10));
