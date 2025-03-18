@@ -141,6 +141,16 @@ const updateUI = function (acc) {
 
 //---event-handler---
 let currentAccount;
+
+// ---add fake login---
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+
+const now = new Date()
+labelDate.textContent = `${now.getDate()}/${now.getMonth()}/${now.getFullYear()}`
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   currentAccount = accounts.find(
@@ -540,20 +550,41 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES 2
 
-console.log(34);
-console.log(0.1 + 0.2);
+// console.log(34);
+// console.log(0.1 + 0.2);
 
-console.log(Number.parseInt('float32', 16));
-console.log(Number.parseInt('float32', 10));
-console.log(Number.isNaN(34));
-console.log(Number.isNaN(+'df34'));
-console.log(25 / 0);
+// console.log(Number.parseInt('float32', 16));
+// console.log(Number.parseInt('float32', 10));
+// console.log(Number.isNaN(34));
+// console.log(Number.isNaN(+'df34'));
+// console.log(25 / 0);
 
-console.log(Number.isInteger(34.2));
-console.log(Number.isFinite(34.2));
+// console.log(Number.isInteger(34.2));
+// console.log(Number.isFinite(34.2));
 
-console.log(Math.trunc(Math.random() * 4) + 1);
+// console.log(Math.trunc(Math.random() * 4) + 1);
 
-console.log(Math.round(3.8));
+// console.log(Math.round(3.8));
 
-console.log(+(3.234).toFixed(10));
+// console.log(+(3.234).toFixed(10));
+
+// console.log(34_342_342);
+
+// console.log(2 ** 53 );
+
+// console.log(34234234234239408230984098n)
+// console.log(BigInt(34234234234239408230984098))
+
+// console.log(new Date(account1.movementsDates[0]))
+// console.log(new Date(2025, 3))
+// console.log(new Date(1))
+// console.log(new Date(60 * 365 * 24 * 60 * 60 * 1000))
+
+const some_day = new Date(2025, 2, 5, 22);
+
+console.log(some_day.getDay());
+console.log(some_day.getDate());
+console.log(some_day.getTime());
+console.log(Date.now());
+some_day.setFullYear(2015);
+console.log(some_day.toString());
