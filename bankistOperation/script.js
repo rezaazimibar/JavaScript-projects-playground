@@ -200,6 +200,10 @@ btnTransfer.addEventListener('click', function (e) {
   ) {
     currentAccount.movements.push(amount * -1);
     receiverAcc.movements.push(amount);
+
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
     updateUI(currentAccount);
   }
 });
@@ -221,7 +225,6 @@ btnClose.addEventListener('click', function (e) {
 
     //hide UI
     containerApp.style.opacity = 0;
-    console.log(accounts);
   }
   inputClosePin.value = inputCloseUsername.value = '';
 });
@@ -233,6 +236,7 @@ btnLoan.addEventListener('click', function (e) {
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     currentAccount.movements.push(amount);
+    currentAccount.movementsDates.push(new Date().toISOString());
     updateUI(currentAccount);
   }
   inputLoanAmount.value = '';
