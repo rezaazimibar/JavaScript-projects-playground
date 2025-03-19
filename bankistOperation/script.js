@@ -77,6 +77,23 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+//functions
+
+const formatMovementDate = function (date) {
+  const calcDayPassed = (date1, date2) =>
+    Math.round(Math.abs((date1 - date2) / (1000 * 60 * 60 * 24)));
+  const daysPass = calcDayPassed(new Date(), date);
+  const day = `${date.getDate()}`.padStart(2, 0);
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const year = date.getFullYear();
+  if (daysPass === 0) return 'Today';
+  if (daysPass === 1) return 'Yesterday';
+  if (daysPass <= 7) `${daysPass} days ago`;
+  else {
+    return `${year}/${month}/${day}`;
+  }
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -88,10 +105,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `${year}/${month}/${day}`;
+    const displayDate = formatMovementDate(date);
 
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${
@@ -597,11 +611,20 @@ btnSort.addEventListener('click', function (e) {
 // console.log(new Date(1))
 // console.log(new Date(60 * 365 * 24 * 60 * 60 * 1000))
 
-const some_day = new Date(2025, 2, 5, 22);
+// const some_day = new Date(2025, 2, 5, 22);
 
-console.log(some_day.getDay());
-console.log(some_day.getDate());
-console.log(some_day.getTime());
-console.log(Date.now());
-some_day.setFullYear(2015);
-console.log(some_day.toString());
+// console.log(some_day.getDay());
+// console.log(some_day.getDate());
+// console.log(some_day.getTime());
+// console.log(Date.now());
+// some_day.setFullYear(2015);
+// console.log(some_day.toString());
+
+const some_day = new Date(2025, 2, 5, 22, 30);
+const later_day = new Date(2019, 10, 5, 2, 30);
+
+console.log(+some_day);
+
+// const calcDayPassed = (date1, date2) =>
+//   Math.abs((date1 - date2) / (1000 * 60 * 60 * 24));
+// console.log(calcDayPassed(some_day, later_day));
