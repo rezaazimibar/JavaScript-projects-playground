@@ -113,7 +113,7 @@ const displayMovements = function (acc, sort = false) {
     } ${type} deposit</div>
     <div class="movements__date">${displayDate}</div>
     <div class="movements__value">${mov.toFixed(2)} €</div>
-  </div>`;
+    </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -170,13 +170,25 @@ updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
 const now = new Date();
-const day = `${now.getDate()}`.padStart(2, 0);
-const month = `${now.getMonth() + 1}`.padStart(2, 0);
-const year = now.getFullYear();
-const hour = `${now.getHours()}`.padStart(2, 0);
-const minute = `${now.getMinutes()}`.padStart(2, 0);
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  weekday: 'long',
+};
+const locale = navigator.language;
 
-labelDate.textContent = `${year}/${month}/${day}, ${hour}:${minute}`;
+labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
+
+// const day = `${now.getDate()}`.padStart(2, 0);
+// const month = `${now.getMonth() + 1}`.padStart(2, 0);
+// const year = now.getFullYear();
+// const hour = `${now.getHours()}`.padStart(2, 0);
+// const minute = `${now.getMinutes()}`.padStart(2, 0);
+
+// labelDate.textContent = `${year}/${month}/${day}, ${hour}:${minute}`;
 
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
@@ -620,10 +632,10 @@ btnSort.addEventListener('click', function (e) {
 // some_day.setFullYear(2015);
 // console.log(some_day.toString());
 
-const some_day = new Date(2025, 2, 5, 22, 30);
-const later_day = new Date(2019, 10, 5, 2, 30);
+// const some_day = new Date(2025, 2, 5, 22, 30);
+// const later_day = new Date(2019, 10, 5, 2, 30);
 
-console.log(+some_day);
+// console.log(+some_day);
 
 // const calcDayPassed = (date1, date2) =>
 //   Math.abs((date1 - date2) / (1000 * 60 * 60 * 24));
