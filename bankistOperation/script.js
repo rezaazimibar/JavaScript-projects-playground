@@ -10,7 +10,7 @@
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Reza Azimi',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -26,7 +26,7 @@ const account1 = {
     '2025-07-12T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  locale: 'en-US',
 };
 
 const account2 = {
@@ -79,19 +79,26 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 //functions
 
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, local) {
   const calcDayPassed = (date1, date2) =>
     Math.round(Math.abs((date1 - date2) / (1000 * 60 * 60 * 24)));
   const daysPass = calcDayPassed(new Date(), date);
-  const day = `${date.getDate()}`.padStart(2, 0);
-  const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  const year = date.getFullYear();
+  // const day = `${date.getDate()}`.padStart(2, 0);
+  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  // const year = date.getFullYear();
   if (daysPass === 0) return 'Today';
   if (daysPass === 1) return 'Yesterday';
   if (daysPass <= 7) `${daysPass} days ago`;
   else {
-    return `${year}/${month}/${day}`;
+    return new Intl.DateTimeFormat(local).format(date);
   }
+};
+
+const formatCal = function (value, local, currency) {
+  return new Intl.NumberFormat(local, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
 };
 
 const displayMovements = function (acc, sort = false) {
@@ -105,14 +112,16 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, acc.local);
+
+    const formattedMov = formatCal(mov, acc.local, acc.currency);
 
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type} deposit</div>
     <div class="movements__date">${displayDate}</div>
-    <div class="movements__value">${mov.toFixed(2)} €</div>
+    <div class="movements__value">${formattedMov}</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -121,26 +130,30 @@ const displayMovements = function (acc, sort = false) {
 
 const calcBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+  labelBalance.textContent = formatCal(acc.balance, acc.local, acc.currency);
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = formatCal(incomes, acc.local, acc.currency);
 
   const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes).toFixed(2)}€`;
+  labelSumOut.textContent = formatCal(
+    Math.abs(outcomes),
+    acc.local,
+    acc.currency
+  );
 
   const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .filter(interest => interest >= 1)
     .reduce((acc, res) => acc + res, 0);
-  labelSumInterest.textContent = `${Math.abs(interest).toFixed(2)}€`;
+  labelSumInterest.textContent = formatCal(interest, acc.local, acc.currency);
 };
 
 //produce side effect on accounts array
@@ -174,13 +187,16 @@ const options = {
   hour: 'numeric',
   minute: 'numeric',
   day: 'numeric',
-  month: 'long',
+  month: 'numeric',
   year: 'numeric',
-  weekday: 'long',
+  // weekday: 'long',
 };
-const locale = navigator.language;
+// const locale = navigator.language;
 
-labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
+labelDate.textContent = new Intl.DateTimeFormat(
+  currentAccount.locale,
+  options
+).format(now);
 
 // const day = `${now.getDate()}`.padStart(2, 0);
 // const month = `${now.getMonth() + 1}`.padStart(2, 0);
@@ -640,3 +656,15 @@ btnSort.addEventListener('click', function (e) {
 // const calcDayPassed = (date1, date2) =>
 //   Math.abs((date1 - date2) / (1000 * 60 * 60 * 24));
 // console.log(calcDayPassed(some_day, later_day));
+
+// const num = 23445323.33424;
+// const option = {
+//   style: 'unit',
+//   unit: 'mile-per-hour',
+// };
+
+// console.log(`US ${new Intl.NumberFormat('en-US', option).format(num)}`);
+// console.log(`DE ${new Intl.NumberFormat('de-DE', option).format(num)}`);
+// console.log(`IR ${new Intl.NumberFormat('fa-IR', option).format(num)}`);
+
+setTimeout(()=> console.log('here your pizza 🍕'), 2000)
