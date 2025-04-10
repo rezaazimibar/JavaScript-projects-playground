@@ -1,12 +1,15 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,8 +33,6 @@ document.addEventListener('keydown', function (e) {
   }
 });
 ////////////////////////////////////////////////////
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
@@ -43,6 +44,26 @@ btnScrollTo.addEventListener('click', function (e) {
   // });
   // window.scrollTo(s1coords.left + window.pageXOffset, 858)
   section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+//////////////////////////////////////
+//page navigation
+
+// document.querySelectorAll('.nav__link').forEach(el => {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault()
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+
+//   });
+// });
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
 });
 
 ///////////////////////////////////////////////////
@@ -73,3 +94,42 @@ btnScrollTo.addEventListener('click', function (e) {
 // console.log(logo.getAttribute('alt'))
 // logo.setAttribute('company', 'here it is')
 // console.log(logo.classList)
+
+// const say_hello = function () {
+//   console.log('hello');
+//   h1.removeEventListener('mousemove', say_hello);
+// };
+
+// const h1 = document.querySelector('h1');
+// const header = document.querySelector('.header__title');
+// header.addEventListener('click', function () {
+//   console.log(this);
+// });
+// h1.addEventListener('mouseenter', function () {
+//   console.log(this);
+// });
+// h1.addEventListener('mousemove', say_hello)
+
+// rgb(255,255,255)
+
+// const random_num = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
+
+// const random_color = () =>
+//   `rgb(${random_num(0, 255)},${random_num(0, 255)},${random_num(0, 255)})`;
+
+// document.querySelector('.nav__link').addEventListener("click", function(e){
+//   this.style.backgroundColor = random_color()
+//   console.log('nav link', e.target)
+// })
+
+// document.querySelector('.nav__links').addEventListener("click", function(e){
+//   this.style.backgroundColor = random_color()
+//   console.log('nav links', e.target)
+//   e.stopPropagation()
+// })
+
+// document.querySelector('.nav').addEventListener("click", function(e){
+//   this.style.backgroundColor = random_color()
+//   console.log('nav', e.target)
+// })
