@@ -176,15 +176,22 @@ const loadImg = function (entries, observer) {
   entry.target.addEventListener('load', function () {
     entry.target.classList.remove('lazy-img');
   });
-  observer.unobserve(entry.target)
+  observer.unobserve(entry.target);
 };
 
 const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
   threshold: 0,
+  rootMargin: '200px',
 });
 
 imagTarget.forEach(img => imgObserver.observe(img));
+
+// --Slider--
+const slides = document.querySelectorAll('.slide');
+slides.forEach((s, i) => {
+  s.style.transform = `translateX(${100 * i}%)`;
+});
 
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
