@@ -188,11 +188,87 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imagTarget.forEach(img => imgObserver.observe(img));
 
 // --Slider--
-const slides = document.querySelectorAll('.slide');
-slides.forEach((s, i) => {
-  s.style.transform = `translateX(${100 * i}%)`;
-});
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
 
+  let curSlid = 0;
+  const maxSlide = slides.length;
+
+  // Function
+  const createDots = function () {
+    slides.forEach((_, i) => {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  const activateDot = function (slide) {
+    document.querySelectorAll('.dots__dot').forEach((s, i) => {
+      s.classList.remove('dots__dot--active');
+    });
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"`)
+      .classList.add('dots__dot--active');
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    });
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (curSlid === maxSlide - 1) {
+      curSlid = 0;
+    } else {
+      curSlid++;
+    }
+
+    goToSlide(curSlid);
+    activateDot(curSlid);
+  };
+
+  const prevSlide = function () {
+    if (curSlid === 0) {
+      curSlid = maxSlide - 1;
+    } else {
+      curSlid--;
+    }
+    goToSlide(curSlid);
+    activateDot(curSlid);
+  };
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(0);
+  };
+  init();
+
+  // Event handler
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') prevSlide();
+    e.key === 'ArrowRight' && nextSlide();
+  });
+
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      curSlid = Number(e.target.dataset.slide);
+      goToSlide(curSlid);
+      activateDot(curSlid);
+    }
+  });
+};
+slider()
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
