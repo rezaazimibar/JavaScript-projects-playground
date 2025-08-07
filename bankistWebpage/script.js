@@ -268,7 +268,7 @@ const slider = function () {
     }
   });
 };
-slider()
+slider();
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -346,3 +346,17 @@ slider()
 
 // console.log(h1.nextElementSibling)
 // console.log(h1.parentElement.children)
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML DOM built', e);
+});
+
+window.addEventListener('load', function (e) {
+  console.log('load event happened ', e);
+});
+
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   console.log('hello');
+//   e.returnValue = '';
+// }); // Not working 
