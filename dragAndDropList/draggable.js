@@ -20,5 +20,30 @@ class draggable {
   }
   addDnDHandlers(element){
     element.setAttribute('draggable', true)
+
+    element.addEventListener('dragstart', this.handleDragStart.bind(this))
+    element.addEventListener('dragenter', this.handleDragEnter.bind(this))
+    element.addEventListener('dragover', this.handleDragOver.bind(this))
+    element.addEventListener('dragleave', this.handleDragLeave.bind(this))
+    element.addEventListener('drop', this.handleDragDrop.bind(this))
+    element.addEventListener('dragend', this.handleDragEnd.bind(this))
+  }
+  handleDragStart(e){
+    console.log('drag start', e.target)
+  }
+  handleDragEnter(e){
+    console.log('drag entered', e.target)
+  }
+  handleDragOver(e){
+    console.log('drag over', e.target)
+  }
+  handleDragLeave(e){
+    console.log('drag leave', e.target)
+  }
+  handleDragDrop(e){
+    console.log('drag drop', e.target)
+  }
+  handleDragEnd(e){
+    console.log('drag ended', e.target)
   }
 }
