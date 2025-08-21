@@ -38,17 +38,23 @@ class draggable {
   }
   handleDragEnter(e) {}
   handleDragOver(e) {
-    if(e.preventDefault) e.preventDefault();
+    if (e.preventDefault) e.preventDefault();
 
-    e.target.classList.add('over')
+    e.target.classList.add("over");
   }
   handleDragLeave(e) {
-    e.target.classList.remove('over')
+    e.target.classList.remove("over");
   }
   handleDragDrop(e) {
-    e.target.classList.remove('over')
-    let target = e.target.closest('.list-item')
-    let dropHTML = e.dataTransfer.getData('text/html')
+    let target = e.target.closest(".list-item");
+
+    if (this.dragScrEl !== target) {
+      let dropHTML = e.dataTransfer.getData("text/html");
+      target.insertAdjacentHTML("beforebegin", dropHTML);
+      target.parentNode.removeChild(this.dragScrEl);
+      this.addDnDHandlers(target.previousSibling);
+    }
+    e.target.classList.remove("over");
   }
   handleDragEnd(e) {
     e.target.classList.remove("dragElem");
