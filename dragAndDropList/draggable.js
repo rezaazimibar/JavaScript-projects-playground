@@ -1,4 +1,6 @@
 class draggable {
+  dragScrEl;
+
   constructor(options) {
     this.setupList(options);
 
@@ -18,32 +20,37 @@ class draggable {
 
     list.forEach((item) => (element.innerHTML += template(item)));
   }
-  addDnDHandlers(element){
-    element.setAttribute('draggable', true)
+  addDnDHandlers(element) {
+    element.setAttribute("draggable", true);
 
-    element.addEventListener('dragstart', this.handleDragStart.bind(this))
-    element.addEventListener('dragenter', this.handleDragEnter.bind(this))
-    element.addEventListener('dragover', this.handleDragOver.bind(this))
-    element.addEventListener('dragleave', this.handleDragLeave.bind(this))
-    element.addEventListener('drop', this.handleDragDrop.bind(this))
-    element.addEventListener('dragend', this.handleDragEnd.bind(this))
+    element.addEventListener("dragstart", this.handleDragStart.bind(this));
+    element.addEventListener("dragenter", this.handleDragEnter.bind(this));
+    element.addEventListener("dragover", this.handleDragOver.bind(this));
+    element.addEventListener("dragleave", this.handleDragLeave.bind(this));
+    element.addEventListener("drop", this.handleDragDrop.bind(this));
+    element.addEventListener("dragend", this.handleDragEnd.bind(this));
   }
-  handleDragStart(e){
-    console.log('drag start', e.target)
+  handleDragStart(e) {
+    this.dragScrEl = e.target;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target.outerHTML);
+    e.target.classList.add("dragElem");
   }
-  handleDragEnter(e){
-    console.log('drag entered', e.target)
+  handleDragEnter(e) {}
+  handleDragOver(e) {
+    if(e.preventDefault) e.preventDefault();
+
+    e.target.classList.add('over')
   }
-  handleDragOver(e){
-    console.log('drag over', e.target)
+  handleDragLeave(e) {
+    e.target.classList.remove('over')
   }
-  handleDragLeave(e){
-    console.log('drag leave', e.target)
+  handleDragDrop(e) {
+    e.target.classList.remove('over')
+    let target = e.target.closest('.list-item')
+    let dropHTML = e.dataTransfer.getData('text/html')
   }
-  handleDragDrop(e){
-    console.log('drag drop', e.target)
-  }
-  handleDragEnd(e){
-    console.log('drag ended', e.target)
+  handleDragEnd(e) {
+    e.target.classList.remove("dragElem");
   }
 }
