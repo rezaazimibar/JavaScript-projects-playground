@@ -17,9 +17,8 @@ Workouts are stored in the browser’s **localStorage** so they persist across s
 
 ---
 
-## 📸 Demo Preview
+## 📸 Logo
 ![screenshot](logo.png)  
-*(Replace with an actual screenshot of the app running)*
 
 ---
 
