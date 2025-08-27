@@ -42,7 +42,12 @@ body {
   width: 30rem;
   border-radius: 0.7rem;
   margin: 0 3rem;
+  transition: all 0.4s ease;
   /* overflow: hidden; */
+}
+.country:hover{
+  box-shadow: none;
+  scale: 0.97;
 }
 
 .neighbour::before {
