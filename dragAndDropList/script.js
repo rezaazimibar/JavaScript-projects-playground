@@ -51,7 +51,6 @@ new draggable({
     </div>`;
   },
   update: (list) => {
-    console.log(list);
+    console.log();
   },
 });
-console.log()
